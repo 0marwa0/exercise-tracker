@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Own Exerises</title>
+    <link rel="stylesheet" href="./bulma.min.css" />
+  </head>
+  <body>
+    <section class="hero is-warning">
+      <div class="hero-body">
+        <p class="title">Exerises counter</p>
+        <p class="subtitle">Starting customizing your own exerices</p>
+      </div>
+    </section>
+    <div class="container">
+      <section class="box my-4">
+        <label>Exerises Name</label>
+        <input
+          class="input my-2 is-warning"
+          id="name"
+          type="text"
+          placeholder="firs exercises"
+        />
+        <latime>Exerises Minuts</label>
+        <input
+          class="input my-2 is-warning"
+          min="1"
+          step="1"
+          type="number"
+          id="time"
+        />
+        <button id="add" class="button my-2 is-warning">Add</button>
+      </section>
+    </div>
+    <!-- items -->
+
+    <div class="container">
+      <div class="box">
+        <div id="countdown"></div>
+
+        <button class="button is-warning is-rounded" id="run">Run</button>
+      </div>
+      <article class="panel is-warning">
+        <p class="panel-heading">Exerises</p>
+        <div class="panel-block">
+          <p class="control has-icons-left">
+            <input class="input is-warning" type="text" placeholder="Search" />
+            <span class="icon is-left">
+              <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+          </p>
+        </div>
+        <div id="exercises-list">
+          <!-- <a class="panel-block is-active">
+            <span class="panel-icon">
+              <i class="fas fa-book" aria-hidden="true"></i>
+            </span>
+            bulma
+          </a> -->
+        </div>
+      </article>
+    </div>
+    <script src="./index.js"></script>
+  </body>
+</html>
