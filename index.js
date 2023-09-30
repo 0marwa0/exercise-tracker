@@ -6,7 +6,7 @@ let currentSeconds = 0;
 const circularBar = document.querySelector(".circular-bar");
 const percent = document.querySelector(".percent");
 let initialValue = 0;
-let finalValue = 0;
+let finalValue = 100;
 
 function speak(text) {
   const synth = window.speechSynthesis;
@@ -68,7 +68,7 @@ async function countDown(timeInput, name, i) {
 
     let remainingTime = resumeExercise ? currentMinuts : totalTimeInSeconds - 1;
     let secondsLeft = resumeExercise ? currentSeconds : 60;
-    console.log(resumeExercise, "is it resume");
+
     while (remainingTime >= 0 && isCountdownRunning) {
       countdownElement.textContent = `Time remaining: ${Math.floor(
         remainingTime
@@ -78,11 +78,9 @@ async function countDown(timeInput, name, i) {
       currentSeconds = secondsLeft;
       currentMinuts = remainingTime;
       let iteration = remainingTime * 60 + secondsLeft;
-      finalValue = 100;
+
       const increment = (finalValue - initialValue) / iteration;
-
       initialValue = initialValue + increment;
-
       circularBar.style.background = `conic-gradient(red ${
         (initialValue.toFixed(2) / 100) * 360
       }deg, #fff 0deg)`;
@@ -105,7 +103,9 @@ async function countDown(timeInput, name, i) {
 document.getElementById("run").addEventListener("click", async () => {
   let exercises = getExercises();
   isCountdownRunning = true;
-
+  if (!resumeExercise) {
+    initialValue = 0;
+  }
   let index = resumeExercise ? currentExercise : 0;
   for (let i = index; i < exercises.length; i++) {
     const element = exercises[i];
