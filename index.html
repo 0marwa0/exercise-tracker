@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Own Exerises</title>
     <link rel="stylesheet" href="./bulma.min.css" />
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
     <section class="hero is-warning">
@@ -13,8 +14,8 @@
         <p class="subtitle">Starting customizing your own exerices</p>
       </div>
     </section>
-    <div class="container">
-      <section class="box my-4">
+    <div class="my-4 container is-flex is-justify-content-space-between is-flex-direction-row">
+      <section class="box">
         <label>Exerises Name</label>
         <input
           class="input my-2 is-warning"
@@ -30,37 +31,37 @@
           type="number"
           id="time"
         />
-        <button id="add" class="button my-2 is-warning">Add</button>
-      </section>
+        <button id="add" class="button my-4 is-warning">Add</button>
+     <article class="panel is-warning my-4">
+        <p class="panel-heading">Exerises</p>
+        <div class="panel-block">
+       </div>
+        <div id="exercises-list">
+       </div>
+      </article>  </section> 
+      <div class="box my-4" style="height: max-content;">
+        <div id="countdown" class="is-centered my-1"></div>
+        <div>
+        <button class="button is-warning is-rounded" id="run">Run</button>
+        <button class="button is-danger mx-2 is-rounded" id="stop">Stop</button>
+       </div>
+       <!-- progress -->
+
+       <div class="wrapper">
+        <div class="circular-bar">
+          <div class="percent"></div>
+        </div>
+       </div>
+      
+
+      </div>
     </div>
     <!-- items -->
 
-    <div class="container">
-      <div class="box">
-        <div id="countdown"></div>
-
-        <button class="button is-warning is-rounded" id="run">Run</button>
-      </div>
-      <article class="panel is-warning">
-        <p class="panel-heading">Exerises</p>
-        <div class="panel-block">
-          <p class="control has-icons-left">
-            <input class="input is-warning" type="text" placeholder="Search" />
-            <span class="icon is-left">
-              <i class="fas fa-search" aria-hidden="true"></i>
-            </span>
-          </p>
-        </div>
-        <div id="exercises-list">
-          <!-- <a class="panel-block is-active">
-            <span class="panel-icon">
-              <i class="fas fa-book" aria-hidden="true"></i>
-            </span>
-            bulma
-          </a> -->
-        </div>
-      </article>
-    </div>
+   
+     
+     
+    
     <script src="./index.js"></script>
   </body>
 </html>

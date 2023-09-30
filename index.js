@@ -1,3 +1,13 @@
+let isCountdownRunning = false;
+let resumeExercise = false;
+let currentExercise = 0;
+let currentMinuts = 0;
+let currentSeconds = 0;
+const circularBar = document.querySelector(".circular-bar");
+const percent = document.querySelector(".percent");
+let initialValue = 0;
+let finalValue = 0;
+
 function speak(text) {
   const synth = window.speechSynthesis;
   const utterance = new SpeechSynthesisUtterance(text);
@@ -35,7 +45,6 @@ function displayExercises() {
     exercises_element.textContent = element.name + element.time;
     exercises_element.appendChild(delete_btn);
     exercises_list.appendChild(exercises_element);
-
     delete_btn.addEventListener("click", () => {
       exercises.splice(index, 1);
       localStorage.setItem("exercises", JSON.stringify(exercises));
@@ -48,45 +57,68 @@ function displayExercises() {
     run_btn.disalbed = false;
   }
 }
-let countdownInterval;
 
-async function countDown(timeInput, name) {
+async function countDown(timeInput, name, i) {
   return new Promise(async (resolve) => {
+    const exercises = getExercises();
     const countdownElement = document.getElementById("countdown");
     const totalTimeInSeconds = Number(timeInput);
-
+    currentExercise = i;
     speak(name); // Start speaking the name
 
-    let remainingTime = totalTimeInSeconds;
-    let secondsLeft = 60;
-
-    while (remainingTime > 0) {
+    let remainingTime = resumeExercise ? currentMinuts : totalTimeInSeconds - 1;
+    let secondsLeft = resumeExercise ? currentSeconds : 60;
+    console.log(resumeExercise, "is it resume");
+    while (remainingTime >= 0 && isCountdownRunning) {
       countdownElement.textContent = `Time remaining: ${Math.floor(
         remainingTime
       )}m : ${secondsLeft}s`;
-
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
       secondsLeft--;
+      currentSeconds = secondsLeft;
+      currentMinuts = remainingTime;
+      let iteration = remainingTime * 60 + secondsLeft;
+      finalValue = 100;
+      const increment = (finalValue - initialValue) / iteration;
+
+      initialValue = initialValue + increment;
+
+      circularBar.style.background = `conic-gradient(red ${
+        (initialValue.toFixed(2) / 100) * 360
+      }deg, #fff 0deg)`;
       playTickSound();
       if (secondsLeft <= 0) {
         secondsLeft = 60;
         remainingTime--;
+        currentSeconds = secondsLeft;
+        currentMinuts = remainingTime;
       }
     }
 
-    countdownElement.textContent = "Done!";
+    if (i == exercises.length) {
+      countdownElement.textContent = "Done!";
+    }
     resolve();
   });
 }
 
 document.getElementById("run").addEventListener("click", async () => {
   let exercises = getExercises();
-  for (const element of exercises) {
-    await countDown(element.time, element.name);
+  isCountdownRunning = true;
+
+  let index = resumeExercise ? currentExercise : 0;
+  for (let i = index; i < exercises.length; i++) {
+    const element = exercises[i];
+
+    await countDown(element.time, element.name, i);
   }
+  isCountdownRunning = false;
 });
 
+document.getElementById("stop").addEventListener("click", () => {
+  isCountdownRunning = false;
+  resumeExercise = true;
+});
 document.getElementById("add").addEventListener("click", () => {
   let exercise_name = document.getElementById("name");
   let exercise_time = document.getElementById("time");
